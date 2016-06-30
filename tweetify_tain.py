@@ -74,7 +74,7 @@ for line in text_arr:
 	
 	line = re.sub('\n', '', line)
 	line = re.sub(' +', ' ', line)
-	line = re.sub('^ ', '', line)
+	line = line.rstrip(' ').lstrip(' ')
 	
 	if len(line) > 0 and len(line) < 140:
 		tweet_arr.append(line) 
@@ -87,7 +87,7 @@ for line in text_arr:
 f = open('tweets.txt', 'w')
 
 for i in tweet_arr:
-	f.writelines(i + '\n')
+	f.write(i.rstrip(' ').lstrip(' ') + '\n')
 
 f.close()	
 
