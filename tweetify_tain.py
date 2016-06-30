@@ -26,18 +26,30 @@ def subdivide(tw):
 
 	if len(tw) < 140:
 		return tw
+	
 	short_tw = tw[:140]
 	
 	if ';' in short_tw:
 		ind = short_tw.rfind(';')
-		
-	if ',' in short_tw:
+	
+	elif ',' in short_tw:
                 ind = short_tw.rfind(',')
-
-	result = [short_tw[:ind]]
-	result.extend(subdivide(tw[ind+1:]))
+	
+	else:
+		ind = short_tw.rfind(' ')
+	
 	return [short_tw[:ind]] + [subdivide(tw[ind+1:])]
 			
+
+def flatten_out(thing):
+
+
+	if thing == []:
+		return thing
+	if isinstance(thing[0], list):
+		return flatten_out(thing[0]) + flatten_out(thing[1:])
+    	
+	return thing[:1] + flatten_out(thing[1:])
 
 
 def sub_tweets(line):
@@ -51,7 +63,7 @@ def sub_tweets(line):
 			out_sub.append(poss_tw)
 			
 		else:
-			out_sub.extend(subdivide(poss_tw))
+			out_sub.extend(flatten_out(subdivide(poss_tw)))
 
 
 	return out_sub
@@ -68,9 +80,15 @@ for line in text_arr:
 		tweet_arr.append(line) 
 		continue
 	
-	#subs = sub_tweets(line)
+	subs = sub_tweets(line)
+	tweet_arr.extend(subs)
 
 
-		
+f = open('tweets.txt', 'w')
+
+for i in tweet_arr:
+	f.writelines(i + '\n')
+
+f.close()	
 
 
