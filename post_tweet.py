@@ -30,12 +30,33 @@ def get_tweet(counter):
 	return tweets[counter].rstrip('\n'), len(tweets)
 
 
+def now_tweet(tweet):
+
+	with open("api.keys", 'r') as f:
+
+		keys = f.readlines()
+	
+
+	for i, key in enumerate(keys):
+		keys[i] = key.rstrip('\n')
+	
+
+	auth = tw.OAuthHandler(keys[0], keys[1])
+	auth.set_access_token(keys[2], keys[3])
+
+	api = tw.API(auth)
+
+
+	api.update_status(tweet)
+
+
+
 counter = where_are_we()
 
 tweet, n = get_tweet(counter)
 
-print(tweet)
+now_tweet(tweet)
 
-update_position(counter+1, n+1)
+update_position(counter+1, n)
 
 
