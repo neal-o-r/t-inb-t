@@ -9,11 +9,11 @@ f.close()
 
 text_wo_lb = re.sub('(?!.)\n(?=.)', ' ', text)
 
-f = open('tain_out.txt','w')
+#f = open('tain_out.txt','w')
 
-f.write(text_wo_lb)
+#f.write(text_wo_lb)
 
-f.close()
+#f.close()
 
 f = open('tain_out.txt', 'r')
 
